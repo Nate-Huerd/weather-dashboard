@@ -1,47 +1,38 @@
 // declare variables (document.querySelector('#id'));
+var cityFormEl = document.querySelector("#search-form");
+var weatherContainerEl = document.querySelector("#weather-display");
+var weatherSearchTerm = document.querySelector("#weather-search-term");
+var fetchButton = document.getElementById('fetch-button');
+var weatherList = document.querySelector('ul');
 // create single-city html file. use id's and classes listed in js
 
-// test api connection
-var getWeather = function (weather) {
-    var apiURL = 'api.openweathermap.org/data/2.5/onecall?lat=38.8&lon=12.09&callback=test'
+// start code here
+function getAPI() {
+    // insert inputed city name into [city name]
+    var apiURL = 'http://api.openweathermap.org/data/2.5/weather?q=[city name]&appid=414ac80477dc8b366e793c03864afab5'
+    fetch(apiURL)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            console.log(data);
 
-    fetch(apiUrl)
-        .then(function (response) {
-            if (response.ok) {
-                console.log(response);
-                response.json().then(function (data) {
-                    console.log(data);
-                    displayWeather(data, user);
-                });
-            } else {
-                alert('Error: ' + response.statusText);
+            for (var i = 0; i < data.length; i++) {
+                var name = document.createElement('li');
+                var temp = document.createElement('p');
+
+                name.textContent = data[i].name;
+                temp = data[i].temp;
             }
         });
-};
+}
 
-/* start code here
-var getWeather = function (weather) {
-    var apiURL = 'https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}'
-    
-    fetch(apiUrl)
-        .then(function (response) {
-            if (response.ok) {
-                console.log(response);
-                response.json().then(function (data) {
-                    console.log(data);
-                    displayWeather(data, user);
-                });
-            } else {
-                alert('Error: ' + response.statusText);
-            }
-        });
-};
-
+fetchButton.addEventListener('click', getAPI);
+/*
 var displayWeather = function(weather, searchTerm) {
     if (weather.length === 0) {
         // use weather container
-        weatherContainerEl.textContent = 'No weather records found.';
-        return;
+        weatherContainerEl.textContent = 'No weather records found.';        return;
     }
 
     weatherSearchTerm.textContent = searchTerm;
@@ -63,7 +54,15 @@ var displayWeather = function(weather, searchTerm) {
         var weatherEl = document.createElement('span');
         weatherEl.classList = 'flex-row align-center';
 
-        // line 89 in homepage.js activity 1, 5 fetch github issues
+        // line 107 of homepage.js code
+        // if (weather[i].)
+        
+        cityEl.appendChild(weatherEl);
 
+        weatherContainerEl.appendChild(cityEl);
     }
-}; */
+};
+
+fetchButton.addEventListener('click', getAPI);
+cityFormEl.addEventListener("submit", formSubmitHandler);
+*/
